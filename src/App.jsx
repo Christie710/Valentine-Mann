@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo, useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import MomentsCards from "./components/MomentsCards";
 import GlowingCursor from "./components/GlowingCursor";
@@ -42,27 +42,43 @@ const App = () => {
   const [section, setSection] = useState("hero");
   const [accepted, setAccepted] = useState(false);
   const [noClicks, setNoClicks] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const handleChange = (event) => setIsMobile(event.matches);
+    setIsMobile(media.matches);
+    media.addEventListener("change", handleChange);
+    return () => media.removeEventListener("change", handleChange);
+  }, []);
 
   const noMessage = useMemo(() => noMessages[noClicks % noMessages.length], [noClicks]);
-  const yesScale = useMemo(() => Math.min(1 + noClicks * 0.14, 2.4), [noClicks]);
+  const yesScale = useMemo(() => Math.min(1 + noClicks * (isMobile ? 0.11 : 0.14), isMobile ? 1.9 : 2.4), [noClicks, isMobile]);
   const noScale = useMemo(() => Math.max(1 - noClicks * 0.2, 0), [noClicks]);
   const noOpacity = useMemo(() => Math.max(1 - noClicks * 0.22, 0), [noClicks]);
   const noGone = noScale <= 0.05;
   const noPosition = useMemo(() => {
     if (noClicks === 0) return { x: 0, y: 0 };
-    const positions = [
-      { x: 72, y: -22 },
-      { x: 96, y: 8 },
-      { x: 120, y: -10 },
-      { x: 148, y: 20 }
-    ];
+    const positions = isMobile
+      ? [
+          { x: 24, y: -10 },
+          { x: 34, y: 8 },
+          { x: 40, y: -7 },
+          { x: 46, y: 12 }
+        ]
+      : [
+          { x: 72, y: -22 },
+          { x: 96, y: 8 },
+          { x: 120, y: -10 },
+          { x: 148, y: 20 }
+        ];
     const current = positions[(noClicks - 1) % positions.length];
-    const distanceFactor = 1 + noClicks * 0.22;
+    const distanceFactor = 1 + noClicks * (isMobile ? 0.12 : 0.22);
     return {
       x: current.x * distanceFactor,
       y: current.y * distanceFactor
     };
-  }, [noClicks]);
+  }, [noClicks, isMobile]);
 
   return (
     <div className={`app-shell ${accepted ? "accepted" : ""}`}>
@@ -207,7 +223,7 @@ const App = () => {
               ))}
             </div>
             <div className="celebration" />
-            <h2>You just made me the happiest person alive, Mann.</h2>
+            <h2>Yayyy 🤭 thank u for taking me i love u more than luje 🤭</h2>
           </motion.section>
         )}
       </main>

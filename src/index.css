@@ -393,7 +393,7 @@ body {
 
 @media (max-width: 768px) {
   .content-layer {
-    padding: 3.2rem 0.6rem 1.2rem;
+    padding: 2.6rem 0.5rem 1rem;
   }
 
   .cinema-bars::before,
@@ -402,15 +402,64 @@ body {
   }
 
   .panel {
+    width: 96vw;
     border-radius: 14px;
+    padding: 1rem 0.85rem;
+  }
+
+  .eyebrow {
+    letter-spacing: 0.2em;
+    font-size: 0.64rem;
+  }
+
+  .hero-panel h1,
+  .question-panel h2 {
+    font-size: clamp(2.3rem, 11vw, 3.1rem);
+    line-height: 0.98;
+  }
+
+  .hero-panel p {
+    margin: 0.9rem auto 1.15rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .moments-panel h2,
+  .question-panel h3 {
+    font-size: clamp(1.6rem, 7.5vw, 2.2rem);
+    margin-bottom: 0.65rem;
   }
 
   .question-actions {
     flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .primary-btn,
+  .yes-btn,
+  .no-btn {
+    width: min(260px, 88vw);
+    min-height: 44px;
+  }
+
+  .moments-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin: 0.9rem 0 1.25rem;
   }
 
   .moment-card img {
-    height: 190px;
+    height: 180px;
+  }
+
+  .acceptance-overlay {
+    padding: 0.9rem;
+  }
+
+  .acceptance-overlay h2 {
+    font-size: clamp(1.45rem, 8.2vw, 2rem);
+    line-height: 1.18;
+    max-width: 18ch;
   }
 
   .glow-cursor {
